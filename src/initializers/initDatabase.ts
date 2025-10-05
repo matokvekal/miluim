@@ -21,3 +21,4 @@ const initDatabase = async (config: any) => {
 
 export default initDatabase;
 
+//comment mysql
