@@ -14,7 +14,7 @@ class TempController extends BaseController {
   // GET /api/temp/hello2
   hello2 = async (req: any, res: any) => {
     try {
-      res.status(200).json({ message: "Hello  from  temp/hello3" });
+      res.status(200).json({ message: "Hello  from  temp/hello3- from gilad" });
     } catch (err) {
       res.status(500).send(" Internal server error");
     }
