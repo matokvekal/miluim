@@ -4,7 +4,6 @@ dotenv.config();
 
 
 const mode = process.env.MODE || 'development';
-console.log("🌍 Loaded MODE =", mode);
 
 
 const configByEnv: any = {

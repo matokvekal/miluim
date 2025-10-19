@@ -9,6 +9,7 @@ import { RATE_LIMIT_WINDOW_MS, RATE_LIMIT_MAX_REQUESTS } from "../constants/inde
 
 import initAuthRoutes from "./initRoutes";
 import initTempRoutes from "./initRoutes";
+import { initSNP500Routes } from "./initRoutes";
 import initDatabase from "./initDatabase";
 
 interface Config {
@@ -16,7 +17,6 @@ interface Config {
 }
 
 export default async (config: Config) => {
-  console.log("Initializing server");
 
   const app: Express = express();
   const server = http.createServer(app);
@@ -55,14 +55,18 @@ export default async (config: Config) => {
   });
   app.use(limiter);
 
-  // ✅ Initialize Database
-  console.log("1. Initializing database...");
+  // Initialize Database
   const dbModels = await initDatabase(config);
+
+  // Store dbModels in app for controllers to access
+  app.set("dbModels", dbModels);
 
   const tempRouter = express.Router();
   initTempRoutes(tempRouter, app);
   app.use("/api/temp", tempRouter);
 
-
+  const snp500Router = express.Router();
+  initSNP500Routes(snp500Router, app);
+  app.use("/api/snp500", snp500Router);
   return { app, server, dbModels };
 };

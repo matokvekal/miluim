@@ -1,20 +1,20 @@
-import getMySQLConnection from '../config/mysql';
+import { sequelize } from '../config/mysql';
 
 const initDatabase = async (config: any) => {
   try {
-    const connection = await getMySQLConnection();
-    console.log("✅ 2. Connected to MySQL database");
+    // Test Sequelize connection
+    await sequelize.authenticate();
 
     const dbModels = {
-      mysql: { connection },
+      sequelize: sequelize,
     };
 
     return dbModels;
   } catch (err: any) {
-    console.error("❌ Failed to connect to MySQL:", err.message || err);
+    console.error("Database connection failed:", err?.message || err);
 
     return {
-      mysql: { connection: null }
+      sequelize: null,
     };
   }
 };
